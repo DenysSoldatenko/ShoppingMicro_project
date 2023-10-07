@@ -1,15 +1,18 @@
 package org.example.orderservice.exceptions;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-/**
- * Exception indicating a not found condition in the OrderService.
- */
-@ResponseStatus(HttpStatus.NOT_FOUND)
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class OrderServiceException extends RuntimeException {
 
-  public OrderServiceException(String message) {
+  private final String errorCode;
+  private final String status;
+
+  public OrderServiceException(String message, String errorCode, String status) {
     super(message);
+    this.errorCode = errorCode;
+    this.status = status;
   }
 }

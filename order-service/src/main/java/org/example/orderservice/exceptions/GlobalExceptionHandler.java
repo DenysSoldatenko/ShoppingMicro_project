@@ -4,11 +4,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.Date;
+
+import static java.lang.Integer.parseInt;
 
 /**
  * Global exception handler for OrderService exceptions.
@@ -24,19 +25,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
    * @return A ResponseEntity containing details of the error.
    */
   @ExceptionHandler(OrderServiceException.class)
-  @ResponseStatus(HttpStatus.NOT_FOUND)
   public ResponseEntity<ErrorDetails> handleProductServiceCustomException(
-    OrderServiceException exception, WebRequest webRequest
+      OrderServiceException exception, WebRequest webRequest
   ) {
 
     ErrorDetails errorDetails = new ErrorDetails(
         new Date(),
-        String.valueOf(HttpStatus.NOT_FOUND.value()),
-        HttpStatus.NOT_FOUND.getReasonPhrase(),
+        String.valueOf(exception.getStatus()),
+        exception.getErrorCode(),
         exception.getMessage(),
         webRequest.getDescription(false).substring(4)
     );
 
-    return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    return new ResponseEntity<>(errorDetails, HttpStatus.valueOf(parseInt(exception.getStatus())));
   }
 }

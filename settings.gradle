@@ -1,4 +1,6 @@
 rootProject.name = 'SpringMicroProject'
 
+includeBuild('config-server')
+includeBuild('eureka-server')
 includeBuild('product-service')
 includeBuild('order-service')

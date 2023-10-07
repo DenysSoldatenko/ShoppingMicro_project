@@ -29,7 +29,8 @@ public class Order {
 
   private Instant orderDate;
 
-  private String orderStatus;
+  @Enumerated(EnumType.STRING)
+  private OrderStatus orderStatus;
 
   private long amount;
 }

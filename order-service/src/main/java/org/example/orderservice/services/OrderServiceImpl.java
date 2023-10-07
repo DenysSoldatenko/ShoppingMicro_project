@@ -4,6 +4,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.orderservice.dtos.AdminOrderDto;
 import org.example.orderservice.dtos.CustomerOrderDto;
+import org.example.orderservice.entities.Order;
+import org.example.orderservice.feign.ProductService;
+import org.example.orderservice.mappers.OrderMapper;
+import org.example.orderservice.repositories.OrderRepository;
+import org.example.orderservice.utils.OrderFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,10 +19,18 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
+  private final OrderRepository orderRepository;
+
+  private final ProductService productService;
+
+  private final OrderMapper orderMapper;
 
   @Override
   public CustomerOrderDto addOrder(CustomerOrderDto orderDto) {
-    return null;
+    productService.reduceQuantity(orderDto.productId(), orderDto.quantity());
+    Order order = OrderFactory.createOrder(orderDto);
+    orderRepository.save(order);
+    return orderMapper.toDto(order);
   }
 
   @Override
