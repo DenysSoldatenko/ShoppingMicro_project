@@ -1,6 +1,12 @@
 server:
   port: 8081
 
+management:
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
+
 spring:
   datasource:
     url:
@@ -10,3 +16,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    open-in-view: false
+  application:
+    name: order-service
+  config:
+    import: configserver:http://localhost:8888
