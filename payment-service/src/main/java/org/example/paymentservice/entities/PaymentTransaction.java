@@ -1,10 +1,8 @@
-package org.example.orderservice.entities;
+package org.example.paymentservice.entities;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,27 +13,31 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity class representing a payment transaction.
+ */
 @Data
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "orders")
+@Table(name = "payment_transactions")
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class Order {
+public class PaymentTransaction {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private long productId;
+  private Long orderId;
 
-  private long quantity;
+  private String paymentMethod;
 
-  private Instant orderDate;
+  private String referenceNumber;
 
-  @Enumerated(EnumType.STRING)
-  private OrderStatus orderStatus;
+  private Instant paymentDate;
 
-  private long amount;
+  private String paymentStatus;
+
+  private Long amount;
 }

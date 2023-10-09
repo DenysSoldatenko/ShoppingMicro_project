@@ -2,6 +2,7 @@ package org.example.productservice.services;
 
 import static org.example.productservice.utils.MessageConstants.INSUFFICIENT_QUANTITY;
 import static org.example.productservice.utils.MessageConstants.PRODUCT_NOT_FOUND;
+import static org.example.productservice.utils.ProductFactory.createProduct;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +11,6 @@ import org.example.productservice.entities.Product;
 import org.example.productservice.exceptions.ProductServiceException;
 import org.example.productservice.mappers.ProductMapper;
 import org.example.productservice.repositories.ProductRepository;
-import org.example.productservice.utils.ProductFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -28,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
   public ProductDto addProduct(ProductDto productRequest) {
     log.info("Adding product: {}", productRequest);
 
-    Product product = ProductFactory.createProduct(productRequest);
+    Product product = createProduct(productRequest);
     productRepository.save(product);
 
     log.info("Product added successfully: {}", product);

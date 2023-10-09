@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import lombok.extern.log4j.Log4j2;
+import org.example.orderservice.exceptions.ErrorDetails;
 import org.example.orderservice.exceptions.OrderServiceException;
-import org.example.productservice.exceptions.ErrorDetails;
 import java.io.IOException;
 
 @Log4j2

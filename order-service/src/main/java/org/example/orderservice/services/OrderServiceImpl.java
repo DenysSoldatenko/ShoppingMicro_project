@@ -1,5 +1,7 @@
 package org.example.orderservice.services;
 
+import static org.example.orderservice.utils.OrderFactory.createOrder;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.orderservice.dtos.AdminOrderDto;
@@ -8,7 +10,6 @@ import org.example.orderservice.entities.Order;
 import org.example.orderservice.feign.ProductService;
 import org.example.orderservice.mappers.OrderMapper;
 import org.example.orderservice.repositories.OrderRepository;
-import org.example.orderservice.utils.OrderFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -28,7 +29,7 @@ public class OrderServiceImpl implements OrderService {
   @Override
   public CustomerOrderDto addOrder(CustomerOrderDto orderDto) {
     productService.reduceQuantity(orderDto.productId(), orderDto.quantity());
-    Order order = OrderFactory.createOrder(orderDto);
+    Order order = createOrder(orderDto);
     orderRepository.save(order);
     return orderMapper.toDto(order);
   }
