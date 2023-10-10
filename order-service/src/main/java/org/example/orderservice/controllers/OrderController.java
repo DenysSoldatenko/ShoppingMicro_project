@@ -2,7 +2,8 @@ package org.example.orderservice.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.example.orderservice.dtos.AdminOrderDto;
-import org.example.orderservice.dtos.CustomerOrderDto;
+import org.example.orderservice.dtos.OrderDto;
+import org.example.orderservice.dtos.RequestDto;
 import org.example.orderservice.services.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller for managing order-related operations.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/orders/")
@@ -21,8 +25,8 @@ public class OrderController {
   private final OrderService orderService;
 
   @PostMapping
-  public ResponseEntity<CustomerOrderDto> addOrder(@RequestBody CustomerOrderDto orderDto) {
-    CustomerOrderDto order = orderService.addOrder(orderDto);
+  public ResponseEntity<OrderDto> addOrder(@RequestBody RequestDto orderDto) {
+    OrderDto order = orderService.addOrder(orderDto);
     return new ResponseEntity<>(order, HttpStatus.CREATED);
   }
 

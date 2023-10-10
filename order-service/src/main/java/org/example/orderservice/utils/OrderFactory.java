@@ -1,29 +1,40 @@
 package org.example.orderservice.utils;
 
-import org.example.orderservice.dtos.CustomerOrderDto;
-import org.example.orderservice.entities.Order;
-import org.example.orderservice.entities.OrderStatus;
+import static java.time.Instant.now;
+import static org.example.orderservice.entities.OrderStatus.CREATED;
 
-import java.time.Instant;
+import lombok.RequiredArgsConstructor;
+import org.example.orderservice.dtos.RequestDto;
+import org.example.orderservice.entities.Order;
+import org.example.orderservice.repositories.OrderRepository;
+import org.springframework.stereotype.Component;
 
 /**
- * Utility class for creating Order instances.
+ * Utility class for creating and saving Order instances.
  */
+@Component
+@RequiredArgsConstructor
 public class OrderFactory {
 
+  private final OrderRepository orderRepository;
+
   /**
-   * Creates a new Order instance with the specified parameters.
+   * Creates a new Order instance with the specified parameters and saves it to the repository.
    *
    * @param orderRequest The order request containing necessary information.
-   * @return The created Order instance.
+   * @return The created and saved Order instance.
    */
-  public static Order createOrder(CustomerOrderDto orderRequest) {
-    return Order.builder()
-      .amount(orderRequest.amount())
-      .orderStatus(OrderStatus.CREATED)
-      .productId(orderRequest.productId())
-      .orderDate(Instant.now())
-      .quantity(orderRequest.quantity())
-      .build();
+  public Order createOrder(RequestDto orderRequest) {
+    Order createdOrder = Order.builder()
+        .amount(orderRequest.amount())
+        .orderStatus(CREATED)
+        .productId(orderRequest.productId())
+        .orderDate(now())
+        .quantity(orderRequest.quantity())
+        .build();
+
+    orderRepository.save(createdOrder);
+
+    return createdOrder;
   }
 }

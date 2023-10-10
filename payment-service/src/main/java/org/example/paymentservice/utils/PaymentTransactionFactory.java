@@ -1,5 +1,8 @@
 package org.example.paymentservice.utils;
 
+import static java.time.Instant.now;
+import static org.example.paymentservice.entities.PaymentStatus.SUCCESS;
+
 import lombok.experimental.UtilityClass;
 import org.example.paymentservice.dtos.PaymentDto;
 import org.example.paymentservice.entities.PaymentTransaction;
@@ -18,11 +21,10 @@ public class PaymentTransactionFactory {
    */
   public static PaymentTransaction createPaymentTransaction(PaymentDto paymentDto) {
     return PaymentTransaction.builder()
-      .paymentDate(paymentDto.paymentDate())
+      .paymentDate(now())
       .paymentMethod(paymentDto.paymentMethod().name())
-      .paymentStatus(paymentDto.paymentStatus())
+      .paymentStatus(SUCCESS)
       .orderId(paymentDto.orderId())
-      .referenceNumber(paymentDto.referenceNumber())
       .amount(paymentDto.amount())
       .build();
   }

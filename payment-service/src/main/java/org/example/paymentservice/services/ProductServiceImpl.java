@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.paymentservice.dtos.PaymentDto;
 import org.example.paymentservice.entities.PaymentTransaction;
-import org.example.paymentservice.exceptions.PaymentServiceException;
 import org.example.paymentservice.mappers.PaymentMapper;
 import org.example.paymentservice.repositories.PaymentRepository;
 import org.springframework.stereotype.Service;
@@ -41,7 +40,7 @@ public class ProductServiceImpl implements PaymentService {
     log.info("Retrieving payment details for the Order Id: {}", orderId);
 
     PaymentTransaction paymentTransaction = paymentRepository.findByOrderId(orderId)
-        .orElseThrow(() -> new PaymentServiceException(PAYMENT_DETAILS_NOT_FOUND + orderId));
+        .orElseThrow(() -> new RuntimeException(PAYMENT_DETAILS_NOT_FOUND + orderId));
 
     log.info("Payment details retrieved successfully for Order Id: {}. Transaction Id: {}",
         orderId, paymentTransaction.getId());

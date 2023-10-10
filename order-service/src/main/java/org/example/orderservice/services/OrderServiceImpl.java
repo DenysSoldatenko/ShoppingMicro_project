@@ -1,15 +1,15 @@
 package org.example.orderservice.services;
 
-import static org.example.orderservice.utils.OrderFactory.createOrder;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.orderservice.dtos.AdminOrderDto;
-import org.example.orderservice.dtos.CustomerOrderDto;
+import org.example.orderservice.dtos.OrderDto;
+import org.example.orderservice.dtos.RequestDto;
 import org.example.orderservice.entities.Order;
 import org.example.orderservice.feign.ProductService;
 import org.example.orderservice.mappers.OrderMapper;
-import org.example.orderservice.repositories.OrderRepository;
+import org.example.orderservice.utils.OrderFactory;
+import org.example.orderservice.utils.OrderPaymentProcessor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,18 +20,20 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
-  private final OrderRepository orderRepository;
+  private final OrderPaymentProcessor orderPaymentProcessor;
+
+  private final OrderFactory orderFactory;
 
   private final ProductService productService;
 
   private final OrderMapper orderMapper;
 
   @Override
-  public CustomerOrderDto addOrder(CustomerOrderDto orderDto) {
-    productService.reduceQuantity(orderDto.productId(), orderDto.quantity());
-    Order order = createOrder(orderDto);
-    orderRepository.save(order);
-    return orderMapper.toDto(order);
+  public OrderDto addOrder(RequestDto requestDto) {
+    productService.reduceQuantity(requestDto.productId(), requestDto.quantity());
+    Order createdOrder = orderFactory.createOrder(requestDto);
+    Order processedOrder = orderPaymentProcessor.processPayment(createdOrder, requestDto);
+    return orderMapper.toDto(processedOrder);
   }
 
   @Override

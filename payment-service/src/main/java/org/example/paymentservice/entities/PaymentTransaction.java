@@ -3,6 +3,8 @@ package org.example.paymentservice.entities;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,11 +35,10 @@ public class PaymentTransaction {
 
   private String paymentMethod;
 
-  private String referenceNumber;
-
   private Instant paymentDate;
 
-  private String paymentStatus;
+  @Enumerated(EnumType.STRING)
+  private PaymentStatus paymentStatus;
 
   private Long amount;
 }

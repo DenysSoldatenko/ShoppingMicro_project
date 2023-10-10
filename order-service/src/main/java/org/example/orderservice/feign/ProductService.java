@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * Feign client interface for communicating with the Product Service.
+ */
 @FeignClient(name = "product-service/api/v1/products/")
 public interface ProductService {
 

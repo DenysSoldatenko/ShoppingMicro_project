@@ -3,11 +3,14 @@ package org.example.orderservice.feign;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Response;
 import feign.codec.ErrorDecoder;
+import java.io.IOException;
 import lombok.extern.log4j.Log4j2;
 import org.example.orderservice.exceptions.ErrorDetails;
 import org.example.orderservice.exceptions.OrderServiceException;
-import java.io.IOException;
 
+/**
+ * Custom Feign error decoder to handle error responses.
+ */
 @Log4j2
 public class CustomErrorDecoder implements ErrorDecoder {
 
@@ -27,8 +30,9 @@ public class CustomErrorDecoder implements ErrorDecoder {
           errorResponse.error(), errorResponse.status());
     } catch (IOException e) {
       log.error("Failed to deserialize error response body. Original response: {}",
-          response.body().toString());
-      return new OrderServiceException("Error decoding response body", "UNKNOWN_ERROR", "500");
+            response.body().toString());
+      return new OrderServiceException("Error decoding response body. Details: "
+          + e.getMessage(), "UNKNOWN_ERROR", "500");
     }
   }
 }

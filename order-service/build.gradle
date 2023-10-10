@@ -32,6 +32,7 @@ dependencies {
     implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
 
     implementation 'org.example:product-service:0.0.1-SNAPSHOT'
+    implementation 'org.example:payment-service:0.0.1-SNAPSHOT'
 
     runtimeOnly 'org.postgresql:postgresql'
 

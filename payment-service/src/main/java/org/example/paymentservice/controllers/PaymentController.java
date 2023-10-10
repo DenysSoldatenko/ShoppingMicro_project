@@ -22,13 +22,13 @@ public class PaymentController {
 
   private final PaymentService paymentService;
 
-  @PostMapping
+  @PostMapping("processPayment")
   public ResponseEntity<PaymentDto> processPayment(@RequestBody PaymentDto paymentRequest) {
     PaymentDto productResponse = paymentService.processPayment(paymentRequest);
     return new ResponseEntity<>(productResponse, HttpStatus.OK);
   }
 
-  @GetMapping("/{orderId}")
+  @GetMapping("{orderId}")
   public ResponseEntity<PaymentDto> getPaymentDetailsByOrderId(@PathVariable long orderId) {
     PaymentDto productResponse = paymentService.getPaymentDetailsByOrderId(orderId);
     return new ResponseEntity<>(productResponse, HttpStatus.OK);
