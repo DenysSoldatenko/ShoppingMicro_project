@@ -3,28 +3,25 @@ package org.example.orderservice.utils;
 import static java.time.Instant.now;
 import static org.example.orderservice.entities.OrderStatus.CREATED;
 
-import lombok.RequiredArgsConstructor;
+import lombok.experimental.UtilityClass;
 import org.example.orderservice.dtos.RequestDto;
 import org.example.orderservice.entities.Order;
 import org.example.orderservice.repositories.OrderRepository;
-import org.springframework.stereotype.Component;
 
 /**
  * Utility class for creating and saving Order instances.
  */
-@Component
-@RequiredArgsConstructor
+@UtilityClass
 public class OrderFactory {
 
-  private final OrderRepository orderRepository;
-
   /**
-   * Creates a new Order instance with the specified parameters and saves it to the repository.
+   * Creates and saves an Order based on the information provided in the OrderRequest DTO.
    *
-   * @param orderRequest The order request containing necessary information.
-   * @return The created and saved Order instance.
+   * @param orderRequest   The DTO containing information for creating the order.
+   * @param orderRepository The repository for managing Order entities.
+   * @return The created Order instance.
    */
-  public Order createOrder(RequestDto orderRequest) {
+  public Order createOrder(RequestDto orderRequest, OrderRepository orderRepository) {
     Order createdOrder = Order.builder()
         .amount(orderRequest.amount())
         .orderStatus(CREATED)

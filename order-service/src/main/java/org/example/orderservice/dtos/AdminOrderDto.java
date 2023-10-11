@@ -1,6 +1,22 @@
 package org.example.orderservice.dtos;
 
-import java.time.Instant;
+import org.example.paymentservice.dtos.PaymentDto;
+import org.example.productservice.dtos.ProductDto;
 
-public record AdminOrderDto(long orderId, Instant orderDate, String orderStatus, long amount) {
+/**
+ * Represents an administrative order DTO that includes order, product, and payment details.
+ */
+public record AdminOrderDto(OrderDto orderDetails,
+                            ProductDetails productDetails,
+                            PaymentDetails paymentDetails) {
+
+  /**
+   * Represents the product details included in the administrative order DTO.
+   */
+  public record ProductDetails(ProductDto productData) { }
+
+  /**
+   * Represents the payment details included in the administrative order DTO.
+   */
+  public record PaymentDetails(PaymentDto paymentData) { }
 }

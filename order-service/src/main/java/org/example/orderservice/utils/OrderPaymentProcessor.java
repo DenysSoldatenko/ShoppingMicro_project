@@ -3,7 +3,7 @@ package org.example.orderservice.utils;
 import static org.example.orderservice.entities.OrderStatus.FAILED;
 import static org.example.orderservice.entities.OrderStatus.PLACED;
 
-import lombok.RequiredArgsConstructor;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.example.orderservice.dtos.RequestDto;
 import org.example.orderservice.entities.Order;
@@ -11,29 +11,27 @@ import org.example.orderservice.entities.OrderStatus;
 import org.example.orderservice.feign.PaymentService;
 import org.example.orderservice.repositories.OrderRepository;
 import org.example.paymentservice.dtos.PaymentDto;
-import org.springframework.stereotype.Component;
 
 /**
- * Utility class for processing payments associated with orders.
+ * Utility class for processing payments and updating order status.
  */
 @Slf4j
-@Component
-@RequiredArgsConstructor
+@UtilityClass
 public class OrderPaymentProcessor {
 
-  private final PaymentService paymentService;
-  private final OrderRepository orderRepository;
-
   /**
-   * Processes the payment for the given order and updates its status accordingly.
+   * Processes payment for the given order, updates its status, and logs the result.
    *
-   * @param order    The order to process the payment for.
-   * @param orderDto The DTO containing order details.
-   * @return The updated order.
+   * @param order           The order to be processed.
+   * @param orderDto        The DTO containing information about the order.
+   * @param paymentService  The service responsible for payment processing.
+   * @param orderRepository The repository for managing Order entities.
+   * @return The updated Order instance.
    */
-  public Order processPayment(Order order, RequestDto orderDto) {
+  public Order processPayment(Order order, RequestDto orderDto,
+                              PaymentService paymentService, OrderRepository orderRepository) {
     PaymentDto paymentRequest = getPaymentDto(order, orderDto);
-    OrderStatus orderStatus = getOrderStatusAfterPayment(paymentRequest);
+    OrderStatus orderStatus = getOrderStatusAfterPayment(paymentRequest, paymentService);
 
     order.setOrderStatus(orderStatus);
     orderRepository.save(order);
@@ -48,7 +46,8 @@ public class OrderPaymentProcessor {
     return new PaymentDto(order.getId(), orderDto.paymentMethod(), orderDto.amount());
   }
 
-  private OrderStatus getOrderStatusAfterPayment(PaymentDto paymentRequest) {
+  private OrderStatus getOrderStatusAfterPayment(PaymentDto paymentRequest,
+                                                 PaymentService paymentService) {
     try {
       paymentService.processPayment(paymentRequest);
       log.info("Payment successfully processed for Order Id: {}. "

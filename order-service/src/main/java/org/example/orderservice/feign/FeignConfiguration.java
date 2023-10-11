@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
  * Configuration class for Feign clients.
  */
 @Configuration
-public class FeignConfig {
+public class FeignConfiguration {
 
   @Bean
   public ErrorDecoder errorDecoder() {
