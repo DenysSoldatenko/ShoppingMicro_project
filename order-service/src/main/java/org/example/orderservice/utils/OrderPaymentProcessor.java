@@ -9,8 +9,9 @@ import org.example.orderservice.dtos.RequestDto;
 import org.example.orderservice.entities.Order;
 import org.example.orderservice.entities.OrderStatus;
 import org.example.orderservice.feign.PaymentService;
+import org.example.orderservice.feign.models.PaymentDto;
 import org.example.orderservice.repositories.OrderRepository;
-import org.example.paymentservice.dtos.PaymentDto;
+
 
 /**
  * Utility class for processing payments and updating order status.

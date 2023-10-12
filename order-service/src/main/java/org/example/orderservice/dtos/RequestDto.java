@@ -1,6 +1,7 @@
 package org.example.orderservice.dtos;
 
-import org.example.paymentservice.entities.PaymentMethod;
+
+import org.example.orderservice.feign.models.PaymentMethod;
 
 /**
  * Represents a data transfer object (DTO) for processing order requests.

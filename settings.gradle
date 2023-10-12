@@ -1,5 +1,6 @@
 rootProject.name = 'SpringMicroProject'
 
+includeBuild('cloud-gateway')
 includeBuild('config-server')
 includeBuild('eureka-server')
 includeBuild('payment-service')

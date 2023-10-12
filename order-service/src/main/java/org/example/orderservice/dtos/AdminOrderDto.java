@@ -1,7 +1,8 @@
 package org.example.orderservice.dtos;
 
-import org.example.paymentservice.dtos.PaymentDto;
-import org.example.productservice.dtos.ProductDto;
+
+import org.example.orderservice.feign.models.PaymentDto;
+import org.example.orderservice.feign.models.ProductDto;
 
 /**
  * Represents an administrative order DTO that includes order, product, and payment details.

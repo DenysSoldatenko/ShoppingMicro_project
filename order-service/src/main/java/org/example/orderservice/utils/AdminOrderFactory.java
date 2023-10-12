@@ -9,8 +9,8 @@ import org.example.orderservice.dtos.OrderDto;
 import org.example.orderservice.exceptions.OrderServiceException;
 import org.example.orderservice.feign.PaymentService;
 import org.example.orderservice.feign.ProductService;
-import org.example.paymentservice.dtos.PaymentDto;
-import org.example.productservice.dtos.ProductDto;
+import org.example.orderservice.feign.models.PaymentDto;
+import org.example.orderservice.feign.models.ProductDto;
 
 /**
  * Utility class for creating AdminOrderDto instances.
