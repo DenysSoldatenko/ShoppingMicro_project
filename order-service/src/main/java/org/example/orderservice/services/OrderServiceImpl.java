@@ -1,10 +1,5 @@
 package org.example.orderservice.services;
 
-import static org.example.orderservice.utils.AdminOrderFactory.createAdminOrder;
-import static org.example.orderservice.utils.MessageConstants.ORDER_NOT_FOUND;
-import static org.example.orderservice.utils.OrderFactory.createOrder;
-import static org.example.orderservice.utils.OrderPaymentProcessor.processPayment;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.orderservice.dtos.AdminOrderDto;
@@ -16,6 +11,10 @@ import org.example.orderservice.feign.PaymentService;
 import org.example.orderservice.feign.ProductService;
 import org.example.orderservice.mappers.OrderMapper;
 import org.example.orderservice.repositories.OrderRepository;
+import org.example.orderservice.utils.AdminOrderFactory;
+import org.example.orderservice.utils.MessageConstants;
+import org.example.orderservice.utils.OrderFactory;
+import org.example.orderservice.utils.OrderPaymentProcessor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -37,17 +36,17 @@ public class OrderServiceImpl implements OrderService {
   @Override
   public OrderDto addOrder(RequestDto requestDto) {
     productService.reduceQuantity(requestDto.productId(), requestDto.quantity());
-    Order createdOrder = createOrder(requestDto, orderRepository);
-    Order updatedOrder = processPayment(createdOrder, requestDto, paymentService, orderRepository);
+    Order createdOrder = OrderFactory.createOrder(requestDto, orderRepository);
+    Order updatedOrder = OrderPaymentProcessor.processPayment(createdOrder, requestDto, paymentService, orderRepository);
     return orderMapper.toDto(updatedOrder);
   }
 
   @Override
   public AdminOrderDto getOrderById(long orderId) {
     Order order = orderRepository.findById(orderId)
-        .orElseThrow(() -> new OrderServiceException(ORDER_NOT_FOUND + orderId,
+        .orElseThrow(() -> new OrderServiceException(MessageConstants.ORDER_NOT_FOUND + orderId,
           "NOT_FOUND", "404"));
 
-    return createAdminOrder(paymentService, productService, orderMapper.toDto(order));
+    return AdminOrderFactory.createAdminOrder(paymentService, productService, orderMapper.toDto(order));
   }
 }
