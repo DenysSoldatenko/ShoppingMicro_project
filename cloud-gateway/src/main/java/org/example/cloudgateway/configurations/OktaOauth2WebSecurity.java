@@ -1,9 +1,8 @@
 package org.example.cloudgateway.configurations;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -28,10 +27,10 @@ public class OktaOauth2WebSecurity {
         authorizeExchangeSpec -> authorizeExchangeSpec
           .anyExchange().authenticated()
       )
-      .oauth2Login(withDefaults())
+      .oauth2Login(Customizer.withDefaults())
       .oauth2ResourceServer(
         resourceServerSpec -> resourceServerSpec
-          .jwt(withDefaults())
+          .jwt(Customizer.withDefaults())
       )
       .build();
   }

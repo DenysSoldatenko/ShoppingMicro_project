@@ -33,7 +33,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
 
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'com.okta.spring:okta-spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'com.okta.spring:okta-spring-boot-starter:3.0.4'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 }
 
 dependencyManagement {
