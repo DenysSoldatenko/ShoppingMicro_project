@@ -5,6 +5,7 @@ import org.example.productservice.dtos.ProductDto;
 import org.example.productservice.services.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,12 +26,16 @@ public class ProductController {
   private final ProductService productService;
 
   @PostMapping
+  @PreAuthorize("hasAuthority('Admin')")
   public ResponseEntity<ProductDto> addProduct(@RequestBody ProductDto productRequest) {
     ProductDto product = productService.addProduct(productRequest);
     return new ResponseEntity<>(product, HttpStatus.CREATED);
   }
 
   @GetMapping("{id}")
+  @PreAuthorize(
+      "hasAuthority('Admin') || hasAuthority('Customer') || hasAuthority('SCOPE_internal')"
+  )
   public ResponseEntity<ProductDto> getProductById(@PathVariable("id") long productId) {
     ProductDto productResponse = productService.getProductById(productId);
     return new ResponseEntity<>(productResponse, HttpStatus.OK);
