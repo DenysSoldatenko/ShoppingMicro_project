@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8082
 
 management:
   tracing:
@@ -18,6 +18,16 @@ spring:
       ddl-auto: update
     open-in-view: false
   application:
-      name: product-service
+      name: payment-service
   config:
       import: configserver:http://localhost:8888
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+
+okta:
+  oauth2:
+    issuer: https://dev-70152661.okta.com/oauth2/default
+    audience: api://default

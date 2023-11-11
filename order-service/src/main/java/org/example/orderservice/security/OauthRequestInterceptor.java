@@ -22,7 +22,7 @@ public class OauthRequestInterceptor implements RequestInterceptor {
   public void apply(RequestTemplate template) {
     template.header("Authorization", "Bearer " + requireNonNull(
         authorizedClientManager.authorize(
-          withClientRegistrationId("internal-client")
+          withClientRegistrationId("okta")
             .principal("internal")
             .build()
         )

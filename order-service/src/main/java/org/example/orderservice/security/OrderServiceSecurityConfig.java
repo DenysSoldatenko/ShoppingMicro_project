@@ -6,12 +6,12 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProvider;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProviderBuilder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizedClientManager;
-import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
@@ -23,16 +23,17 @@ import org.springframework.security.web.SecurityFilterChain;
 public class OrderServiceSecurityConfig {
 
   /**
-   * Creates and configures an OAuth2AuthorizedClientManager bean.
+   * Creates and configures an OAuth2AuthorizedClientManager bean using an
+   * AuthorizedClientServiceOAuth2AuthorizedClientManager.
    *
    * @param clientRegistrationRepository    The repository containing client registrations.
-   * @param auth2AuthorizedClientRepository The repository for storing authorized client details.
+   * @param auth2AuthorizedClientService The service for managing authorized client details.
    * @return An instance of OAuth2AuthorizedClientManager.
    */
   @Bean
   public OAuth2AuthorizedClientManager clientManager(
       ClientRegistrationRepository clientRegistrationRepository,
-      OAuth2AuthorizedClientRepository auth2AuthorizedClientRepository
+      OAuth2AuthorizedClientService auth2AuthorizedClientService
   ) {
 
     OAuth2AuthorizedClientProvider clientProvider
@@ -41,14 +42,12 @@ public class OrderServiceSecurityConfig {
         .clientCredentials()
         .build();
 
-    DefaultOAuth2AuthorizedClientManager clientManager
-        = new DefaultOAuth2AuthorizedClientManager(
-        clientRegistrationRepository, auth2AuthorizedClientRepository
+    AuthorizedClientServiceOAuth2AuthorizedClientManager clientManager
+        = new AuthorizedClientServiceOAuth2AuthorizedClientManager(
+        clientRegistrationRepository, auth2AuthorizedClientService
     );
 
-    clientManager.setAuthorizedClientProvider(
-        clientProvider
-    );
+    clientManager.setAuthorizedClientProvider(clientProvider);
 
     return clientManager;
   }
@@ -64,10 +63,9 @@ public class OrderServiceSecurityConfig {
   public SecurityFilterChain securityWebFilterChain(HttpSecurity http) throws Exception {
     return http
       .authorizeHttpRequests(
-        authorizeExchangeSpec -> authorizeExchangeSpec
+        authorizeRequest -> authorizeRequest
           .anyRequest().authenticated()
       )
-      .oauth2Login(Customizer.withDefaults())
       .oauth2ResourceServer(
         resourceServerSpec -> resourceServerSpec
           .jwt(Customizer.withDefaults())

@@ -1,7 +1,6 @@
 package org.example.cloudgateway.utils;
 
 import static java.util.Objects.requireNonNull;
-import static java.util.stream.Collectors.toList;
 
 import lombok.experimental.UtilityClass;
 import org.example.cloudgateway.models.AuthenticationResponse;
@@ -34,7 +33,7 @@ public class AuthenticationResponseBuilder {
       oidcUser.getAuthorities()
         .stream()
         .map(GrantedAuthority::getAuthority)
-        .collect(toList())
+        .toList()
     );
   }
 }

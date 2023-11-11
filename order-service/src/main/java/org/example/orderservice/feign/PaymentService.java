@@ -5,6 +5,8 @@ import static org.example.orderservice.utils.MessageConstants.PAYMENT_SERVICE_UN
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.example.orderservice.exceptions.OrderServiceException;
 import org.example.orderservice.feign.models.PaymentDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,13 +21,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 @CircuitBreaker(name = "payment-service", fallbackMethod = "fallbackMethod")
 public interface PaymentService {
 
+  Logger logger = LoggerFactory.getLogger(PaymentService.class);
+
   @PostMapping("processPayment")
   ResponseEntity<PaymentDto> processPayment(@RequestBody PaymentDto paymentRequest);
 
   @GetMapping("{orderId}")
   ResponseEntity<PaymentDto> getPaymentDetailsByOrderId(@PathVariable long orderId);
 
-  default ResponseEntity<Long> fallbackMethod(Exception e) {
+  default ResponseEntity<PaymentDto> fallbackMethod(Exception e) {
+    logger.error("Fallback method invoked due to exception: {}", e.getMessage());
     throw new OrderServiceException(PAYMENT_SERVICE_UNAVAILABLE, "UNAVAILABLE", "500");
   }
 }

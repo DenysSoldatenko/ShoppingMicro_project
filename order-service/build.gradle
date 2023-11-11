@@ -30,8 +30,10 @@ dependencies {
     implementation 'io.micrometer:micrometer-tracing-bridge-brave'
     implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
     implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
+
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'com.okta.spring:okta-spring-boot-starter:3.0.4'
 
     runtimeOnly 'org.postgresql:postgresql'
 
@@ -40,6 +42,7 @@ dependencies {
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 
     implementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-gradle-plugin:3.2.2'
 }
 
 dependencyManagement {

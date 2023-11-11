@@ -8,10 +8,16 @@ management:
       probability: 1.0
 
 spring:
+  cloud:
+    openfeign:
+     oauth2:
+       enabled: true
+       clientRegistrationId: okta
+
   datasource:
-    url: jdbc:postgresql://localhost:5432/example_database
-    username: postgres
-    password: postgres
+    url:
+    username:
+    password:
     driverClassName: org.postgresql.Driver
   jpa:
     hibernate:
@@ -25,18 +31,24 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri:
+          issuer-uri: https://dev-70152661.okta.com/oauth2/default
       client:
         registration:
-          internal-client:
+          okta:
             provider: okta
-            authorization-grant-type: client_credentials
             scope: internal
+            authorization-grant-type: client_credentials
             client-id:
             client-secret:
         provider:
           okta:
-            issuer-uri:
+            issuer-uri: https://dev-70152661.okta.com/oauth2/default
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+    org.springframework.cloud.openfeign: DEBUG
 
 resilience4j:
   circuitbreaker:

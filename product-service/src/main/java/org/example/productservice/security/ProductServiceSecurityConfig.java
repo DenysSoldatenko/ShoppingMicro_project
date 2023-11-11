@@ -25,11 +25,9 @@ public class ProductServiceSecurityConfig {
   public SecurityFilterChain securityWebFilterChain(HttpSecurity http) throws Exception {
     return http
       .authorizeHttpRequests(
-        authorizeRequests -> authorizeRequests
-          .requestMatchers("/api/v1/products/**")
-          .hasAuthority("SCOPE_internal")
-          .anyRequest()
-          .authenticated()
+        authorizeRequest -> authorizeRequest
+          .requestMatchers("/api/v1/products/**").hasAuthority("SCOPE_internal")
+          .anyRequest().authenticated()
       )
       .oauth2ResourceServer(
         resourceServerSpec -> resourceServerSpec
