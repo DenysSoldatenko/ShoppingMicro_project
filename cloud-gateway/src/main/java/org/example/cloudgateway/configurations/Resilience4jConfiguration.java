@@ -23,9 +23,10 @@ public class Resilience4jConfiguration {
   @Bean
   public Customizer<Resilience4JCircuitBreakerFactory> defaultCustomizer() {
     return factory -> factory.configureDefault(
-      id -> new Resilience4JConfigBuilder(id)
-        .circuitBreakerConfig(ofDefaults())
-        .build());
+        id -> new Resilience4JConfigBuilder(id)
+          .circuitBreakerConfig(ofDefaults())
+          .build()
+      );
   }
 }
 

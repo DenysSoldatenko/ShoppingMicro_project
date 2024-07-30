@@ -30,10 +30,7 @@ public class AuthenticationResponseBuilder {
       client.getAccessToken().getTokenValue(),
       requireNonNull(client.getRefreshToken()).getTokenValue(),
       requireNonNull(client.getAccessToken().getExpiresAt()).getEpochSecond(),
-      oidcUser.getAuthorities()
-        .stream()
-        .map(GrantedAuthority::getAuthority)
-        .toList()
+      oidcUser.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList()
     );
   }
 }

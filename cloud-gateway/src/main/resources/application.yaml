@@ -3,10 +3,10 @@ server:
 
 spring:
   application:
-    name: cloud-gateway
-  config:
-    import: configserver:http://localhost:8888
+    name: gateway-service
   cloud:
+    config:
+      enabled: false
     gateway:
       routes:
         - id: order-service
@@ -50,11 +50,10 @@ spring:
               args:
                 redis-rate-limiter.replenishRate: 1
                 redis-rate-limiter.burstCapacity: 1
-
 okta:
   oauth2:
-    issuer:
+    issuer: ${0KTA_ISSUER}
     audience: api://default
-    client-id:
-    client-secret:
+    client-id: ${0KTA_CLIENT_ID}
+    client-secret: ${0KTA_CLIENT_SECRET}
     scopes: openid, email, profile, offline_access

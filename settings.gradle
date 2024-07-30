@@ -1,4 +1,4 @@
-rootProject.name = 'SpringMicroProject'
+rootProject.name = 'ShoppingMicro_project'
 
 includeBuild('cloud-gateway')
 includeBuild('config-server')

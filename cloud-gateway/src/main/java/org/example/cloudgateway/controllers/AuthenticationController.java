@@ -1,9 +1,9 @@
 package org.example.cloudgateway.controllers;
 
 import static org.example.cloudgateway.utils.AuthenticationResponseBuilder.buildFromOidcUserAndOauth2Client;
+import static org.springframework.http.HttpStatus.OK;
 
 import org.example.cloudgateway.models.AuthenticationResponse;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
@@ -26,6 +26,6 @@ public class AuthenticationController {
       @RegisteredOAuth2AuthorizedClient("okta") OAuth2AuthorizedClient client
   ) {
     AuthenticationResponse response = buildFromOidcUserAndOauth2Client(oidcUser, client);
-    return new ResponseEntity<>(response, HttpStatus.OK);
+    return new ResponseEntity<>(response, OK);
   }
 }

@@ -1,0 +1,9 @@
+To run this application, you need to set the following VM properties:
+
+-Dokta.oauth2.issuer=issuer
+-Dokta.oauth2.client-id=client-id
+-Dokta.oauth2.client-secret=client-secret
+
+Make sure to replace <issuer>, <client-id>, and <client-secret> with the appropriate values
+for your Okta configuration. These properties are essential for configuring the application's
+connection with Okta's OAuth2 service.
