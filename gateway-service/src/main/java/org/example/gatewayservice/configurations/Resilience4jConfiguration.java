@@ -1,4 +1,4 @@
-package org.example.cloudgateway.configurations;
+package org.example.gatewayservice.configurations;
 
 import static io.github.resilience4j.circuitbreaker.CircuitBreakerConfig.ofDefaults;
 

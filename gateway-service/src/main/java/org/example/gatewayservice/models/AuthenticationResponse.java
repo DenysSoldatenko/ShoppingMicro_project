@@ -1,4 +1,4 @@
-package org.example.cloudgateway.models;
+package org.example.gatewayservice.models;
 
 import java.util.Collection;
 

@@ -1,4 +1,4 @@
-package org.example.cloudgateway.controllers;
+package org.example.gatewayservice.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,16 +11,16 @@ public class FallbackController {
 
   @GetMapping("/fallback/orderService")
   public String orderServiceFallback() {
-    return "Order Service is currently unavailable. Please try again later.";
+    return "Order Service is currently unavailable. Please try again later!";
   }
 
   @GetMapping("/fallback/paymentService")
   public String paymentServiceFallback() {
-    return "Payment Service is currently unavailable. Please try again later.";
+    return "Payment Service is currently unavailable. Please try again later!";
   }
 
   @GetMapping("/fallback/productService")
   public String productServiceFallback() {
-    return "Product Service is currently unavailable. Please try again later.";
+    return "Product Service is currently unavailable. Please try again later!";
   }
 }

@@ -1,4 +1,4 @@
-package org.example.cloudgateway.configurations;
+package org.example.gatewayservice.configurations;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 

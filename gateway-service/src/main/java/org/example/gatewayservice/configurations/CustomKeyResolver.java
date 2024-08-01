@@ -1,4 +1,4 @@
-package org.example.cloudgateway.configurations;
+package org.example.gatewayservice.configurations;
 
 import static reactor.core.publisher.Mono.just;
 

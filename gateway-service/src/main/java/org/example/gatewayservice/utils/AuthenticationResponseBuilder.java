@@ -1,9 +1,9 @@
-package org.example.cloudgateway.utils;
+package org.example.gatewayservice.utils;
 
 import static java.util.Objects.requireNonNull;
 
 import lombok.experimental.UtilityClass;
-import org.example.cloudgateway.models.AuthenticationResponse;
+import org.example.gatewayservice.models.AuthenticationResponse;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
