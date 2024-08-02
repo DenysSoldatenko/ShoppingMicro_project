@@ -57,3 +57,9 @@ okta:
     client-id: ${0KTA_CLIENT_ID}
     client-secret: ${0KTA_CLIENT_SECRET}
     scopes: openid, email, profile, offline_access
+
+logging:
+  level:
+    root: ERROR
+    org.springframework.boot: WARN
+    org.example: INFO
