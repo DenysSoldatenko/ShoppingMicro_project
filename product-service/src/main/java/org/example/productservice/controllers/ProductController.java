@@ -1,9 +1,10 @@
 package org.example.productservice.controllers;
 
+import static org.springframework.http.HttpStatus.CREATED;
+
 import lombok.RequiredArgsConstructor;
 import org.example.productservice.dtos.ProductDto;
 import org.example.productservice.services.ProductService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,8 +27,8 @@ public class ProductController {
 
   @PostMapping
   public ResponseEntity<ProductDto> addProduct(@RequestBody ProductDto productRequest) {
-    ProductDto product = productService.addProduct(productRequest);
-    return new ResponseEntity<>(product, HttpStatus.CREATED);
+    ProductDto product = productService.createProduct(productRequest);
+    return new ResponseEntity<>(product, CREATED);
   }
 
   @GetMapping("{id}")

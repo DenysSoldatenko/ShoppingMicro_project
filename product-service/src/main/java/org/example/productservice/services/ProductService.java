@@ -7,7 +7,7 @@ import org.example.productservice.dtos.ProductDto;
  */
 public interface ProductService {
 
-  ProductDto addProduct(ProductDto productDto);
+  ProductDto createProduct(ProductDto productDto);
 
   ProductDto getProductById(long productId);
 

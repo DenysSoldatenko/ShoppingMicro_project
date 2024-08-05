@@ -1,8 +1,9 @@
-package org.example.productservice.security;
+package org.example.productservice.configurations;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -12,7 +13,15 @@ import org.springframework.security.web.SecurityFilterChain;
  */
 @Configuration
 @EnableWebSecurity
-public class ProductServiceSecurityConfig {
+public class SecurityConfiguration {
+
+  private static final String[] PUBLIC_ROUTES = {
+    "/v3/api-docs/**",
+    "/swagger-ui/**",
+    "/swagger-resources/**",
+    "/swagger-ui.html",
+    "/webjars/**"
+  };
 
   /**
    * Configures the security filter chain for the ProductService.
@@ -26,12 +35,13 @@ public class ProductServiceSecurityConfig {
     return http
       .authorizeHttpRequests(
         authorizeRequest -> authorizeRequest
-          .requestMatchers("/api/v1/products/**").hasAuthority("SCOPE_internal")
+          .requestMatchers(PUBLIC_ROUTES).permitAll()
           .anyRequest().authenticated()
       )
       .oauth2ResourceServer(
-        resourceServerSpec -> resourceServerSpec
-          .jwt(Customizer.withDefaults())
+        serverConfigurer ->
+          serverConfigurer
+            .jwt(withDefaults())
       )
       .build();
   }

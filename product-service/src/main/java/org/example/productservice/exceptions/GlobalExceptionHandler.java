@@ -1,7 +1,9 @@
 package org.example.productservice.exceptions;
 
+import static java.lang.String.valueOf;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 import java.util.Date;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,19 +25,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
    * @return A ResponseEntity containing details of the error.
    */
   @ExceptionHandler(ProductServiceException.class)
-  @ResponseStatus(HttpStatus.NOT_FOUND)
+  @ResponseStatus(NOT_FOUND)
   public ResponseEntity<ErrorDetails> handleProductServiceCustomException(
       ProductServiceException exception, WebRequest webRequest
   ) {
 
     ErrorDetails errorDetails = new ErrorDetails(
         new Date(),
-        String.valueOf(HttpStatus.NOT_FOUND.value()),
-        HttpStatus.NOT_FOUND.getReasonPhrase(),
+        valueOf(NOT_FOUND.value()),
+        NOT_FOUND.getReasonPhrase(),
         exception.getMessage(),
         webRequest.getDescription(false).substring(4)
     );
 
-    return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    return new ResponseEntity<>(errorDetails, NOT_FOUND);
   }
 }
