@@ -2,6 +2,10 @@ package org.example.productservice.controllers;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.example.productservice.dtos.ProductDto;
 import org.example.productservice.services.ProductService;
@@ -20,23 +24,52 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/products/")
+@RequestMapping("/api/v1/products")
+@Tag(name = "Product Controller", description = "APIs for managing products")
 public class ProductController {
 
   private final ProductService productService;
 
   @PostMapping
+  @Operation(
+      summary = "Add a new product",
+      description = "Create a new product with the given details"
+  )
+  @ApiResponses({
+    @ApiResponse(responseCode = "201", description = "Product created successfully"),
+    @ApiResponse(responseCode = "400", description = "Invalid input data"),
+    @ApiResponse(responseCode = "500", description = "Internal server error")
+  })
   public ResponseEntity<ProductDto> addProduct(@RequestBody ProductDto productRequest) {
     ProductDto product = productService.createProduct(productRequest);
     return new ResponseEntity<>(product, CREATED);
   }
 
-  @GetMapping("{id}")
+  @GetMapping("/{id}")
+  @Operation(
+      summary = "Get product by ID",
+      description = "Retrieve a product by its unique identifier"
+  )
+  @ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Product retrieved successfully"),
+    @ApiResponse(responseCode = "404", description = "Product not found"),
+    @ApiResponse(responseCode = "500", description = "Internal server error")
+  })
   public ProductDto getProductById(@PathVariable("id") long productId) {
     return productService.getProductById(productId);
   }
 
-  @PutMapping("{id}/reduceQuantity")
+  @PutMapping("/{id}/reduceQuantity")
+  @Operation(
+      summary = "Reduce product quantity",
+      description = "Reduce the quantity of a specific product by the specified amount"
+  )
+  @ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Product quantity reduced successfully"),
+    @ApiResponse(responseCode = "400", description = "Invalid quantity specified"),
+    @ApiResponse(responseCode = "404", description = "Product not found"),
+    @ApiResponse(responseCode = "500", description = "Internal server error")
+  })
   public ProductDto reduceQuantity(
       @PathVariable("id") long productId, @RequestParam(name = "quantity") int quantity
   ) {
