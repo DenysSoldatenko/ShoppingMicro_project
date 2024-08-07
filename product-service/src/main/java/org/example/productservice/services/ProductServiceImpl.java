@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.productservice.dtos.ProductDto;
 import org.example.productservice.entities.Product;
 import org.example.productservice.exceptions.ProductServiceException;
+import org.example.productservice.initializers.ProductDataInitializer;
 import org.example.productservice.mappers.ProductMapper;
 import org.example.productservice.repositories.ProductRepository;
 import org.example.productservice.utils.ProductFactory;
@@ -21,8 +22,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
-  private final ProductRepository productRepository;
   private final ProductMapper productMapper;
+  private final ProductRepository productRepository;
+  private final ProductDataInitializer productDataInitializer;
 
   @Override
   public ProductDto createProduct(ProductDto productRequest) {
@@ -64,5 +66,10 @@ public class ProductServiceImpl implements ProductService {
 
     log.info("Quantity reduced successfully. Updated product: {}", product);
     return productMapper.toDto(product);
+  }
+
+  @Override
+  public String initializeData() {
+    return productDataInitializer.initData();
   }
 }

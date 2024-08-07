@@ -29,6 +29,7 @@ dependencies {
     implementation "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:${springStarterCloudVersion}"
     implementation "org.springframework.cloud:spring-cloud-starter-config:${springStarterCloudVersion}"
 
+    implementation "net.datafaker:datafaker:${dataFakerVersion}"
     implementation "io.micrometer:micrometer-tracing-bridge-brave:${micrometerVersion}"
     implementation "io.zipkin.reporter2:zipkin-reporter-brave:${zipkinVersion}"
     implementation "com.okta.spring:okta-spring-boot-starter:${oktaVersion}"

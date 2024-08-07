@@ -12,4 +12,6 @@ public interface ProductService {
   ProductDto getProductById(long productId);
 
   ProductDto reduceProductQuantity(long productId, long quantity);
+
+  String initializeData();
 }

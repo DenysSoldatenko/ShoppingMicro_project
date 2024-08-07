@@ -33,4 +33,17 @@ public class Product {
   private long price;
 
   private long quantity;
+
+  /**
+   * Constructs a new {@code Product} with the specified name, price, and quantity.
+   *
+   * @param productName the name of the product
+   * @param price the price of the product
+   * @param quantity the quantity of the product in stock
+   */
+  public Product(String productName, long price, long quantity) {
+    this.productName = productName;
+    this.price = price;
+    this.quantity = quantity;
+  }
 }

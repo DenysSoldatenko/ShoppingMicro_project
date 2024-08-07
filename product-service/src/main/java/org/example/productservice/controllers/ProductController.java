@@ -1,8 +1,11 @@
 package org.example.productservice.controllers;
 
+import static org.example.productservice.utils.MessageConstants.DATA_INITIALIZATION_SUCCESS_MESSAGE;
 import static org.springframework.http.HttpStatus.CREATED;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,6 +32,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
 
   private final ProductService productService;
+
+  @Operation(summary = "Initialize product data")
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "201", description = "Data initialized successfully",
+      content = {
+        @Content(mediaType = "application/text",
+          schema = @Schema(type = "string", example = DATA_INITIALIZATION_SUCCESS_MESSAGE))
+      }),
+    @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+  })
+  @PostMapping("/initialize")
+  public ResponseEntity<String> initializeData() {
+    return new ResponseEntity<>(productService.initializeData(), CREATED);
+  }
 
   @PostMapping
   @Operation(
