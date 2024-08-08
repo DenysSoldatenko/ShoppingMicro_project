@@ -1,6 +1,6 @@
 package org.example.paymentservice.entities;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -23,8 +23,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "payment_transactions")
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@Table(name = "payments")
+@JsonNaming(SnakeCaseStrategy.class)
 public class PaymentTransaction {
 
   @Id
