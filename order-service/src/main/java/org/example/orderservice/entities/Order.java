@@ -41,4 +41,12 @@ public class Order {
   private OrderStatus orderStatus;
 
   private long amount;
+
+  public Order(long productId, long quantity, Instant orderDate, OrderStatus orderStatus, long amount) {
+    this.productId = productId;
+    this.quantity = quantity;
+    this.orderDate = orderDate;
+    this.orderStatus = orderStatus;
+    this.amount = amount;
+  }
 }

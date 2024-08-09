@@ -31,7 +31,6 @@ public class OrderFactory {
         .build();
 
     orderRepository.save(createdOrder);
-
     return createdOrder;
   }
 }

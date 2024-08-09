@@ -63,8 +63,8 @@ public class ProductDataInitializer {
     return IntStream.range(0, batchSize)
       .mapToObj(i -> new Product(
         faker.commerce().productName(),
-        faker.number().numberBetween(1, 500),
-        faker.number().numberBetween(100, 1000)
+        faker.number().numberBetween(1, 10_000),
+        faker.number().numberBetween(100, 1_000)
       ))
       .toList();
   }

@@ -36,6 +36,7 @@ public class SecurityConfiguration {
       .authorizeHttpRequests(
         authorizeRequest -> authorizeRequest
           .requestMatchers(PUBLIC_ROUTES).permitAll()
+          .requestMatchers("/api/v*/payments/**").hasAuthority("SCOPE_internal")
           .anyRequest().authenticated()
       )
       .oauth2ResourceServer(

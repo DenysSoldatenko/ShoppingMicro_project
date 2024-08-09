@@ -1,8 +1,9 @@
-package org.example.orderservice.security;
+package org.example.orderservice.configurations;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,7 +21,15 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class OrderServiceSecurityConfig {
+public class SecurityConfiguration {
+
+  private static final String[] PUBLIC_ROUTES = {
+    "/v3/api-docs/**",
+    "/swagger-ui/**",
+    "/swagger-resources/**",
+    "/swagger-ui.html",
+    "/webjars/**"
+  };
 
   /**
    * Creates and configures an OAuth2AuthorizedClientManager bean using an
@@ -36,19 +45,16 @@ public class OrderServiceSecurityConfig {
       OAuth2AuthorizedClientService auth2AuthorizedClientService
   ) {
 
-    OAuth2AuthorizedClientProvider clientProvider
-        = OAuth2AuthorizedClientProviderBuilder
-        .builder()
+    OAuth2AuthorizedClientProvider clientProvider = OAuth2AuthorizedClientProviderBuilder.builder()
         .clientCredentials()
         .build();
 
     AuthorizedClientServiceOAuth2AuthorizedClientManager clientManager
         = new AuthorizedClientServiceOAuth2AuthorizedClientManager(
-        clientRegistrationRepository, auth2AuthorizedClientService
-    );
+          clientRegistrationRepository, auth2AuthorizedClientService
+      );
 
     clientManager.setAuthorizedClientProvider(clientProvider);
-
     return clientManager;
   }
 
@@ -64,11 +70,13 @@ public class OrderServiceSecurityConfig {
     return http
       .authorizeHttpRequests(
         authorizeRequest -> authorizeRequest
+          .requestMatchers(PUBLIC_ROUTES).permitAll()
           .anyRequest().authenticated()
       )
       .oauth2ResourceServer(
-        resourceServerSpec -> resourceServerSpec
-          .jwt(Customizer.withDefaults())
+        serverConfigurer ->
+          serverConfigurer
+            .jwt(withDefaults())
       )
       .build();
   }

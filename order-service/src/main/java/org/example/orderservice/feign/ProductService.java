@@ -17,17 +17,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * Feign client interface for communicating with the Product Service.
  */
-@FeignClient(name = "product-service/api/v1/products/")
+@FeignClient(name = "product-service/api/v1/products")
 @CircuitBreaker(name = "product-service", fallbackMethod = "fallbackMethod")
 public interface ProductService {
 
   Logger logger = LoggerFactory.getLogger(PaymentService.class);
 
-  @PutMapping("{id}/reduceQuantity")
+  @PutMapping("/{id}/reduceQuantity")
   ResponseEntity<ProductDto> reduceQuantity(@PathVariable("id") long productId,
                                             @RequestParam long quantity);
 
-  @GetMapping("{id}")
+  @GetMapping("/{id}")
   ResponseEntity<ProductDto> getProductById(@PathVariable("id") long productId);
 
   default ResponseEntity<ProductDto> fallbackMethod(Exception e) {

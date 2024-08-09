@@ -1,4 +1,4 @@
-package org.example.orderservice.security;
+package org.example.orderservice.configurations;
 
 import static java.util.Objects.requireNonNull;
 import static org.springframework.security.oauth2.client.OAuth2AuthorizeRequest.withClientRegistrationId;
@@ -20,14 +20,15 @@ public class OauthRequestInterceptor implements RequestInterceptor {
 
   @Override
   public void apply(RequestTemplate template) {
-    template.header("Authorization", "Bearer " + requireNonNull(
-        authorizedClientManager.authorize(
-          withClientRegistrationId("okta")
-            .principal("internal")
-            .build()
-        )
-      ).getAccessToken()
-        .getTokenValue()
+    template.header(
+        "Authorization",
+        "Bearer " + requireNonNull(
+          authorizedClientManager.authorize(
+              withClientRegistrationId("okta").principal("internal").build()
+            )
+      )
+        .getAccessToken()
+          .getTokenValue()
     );
   }
 }

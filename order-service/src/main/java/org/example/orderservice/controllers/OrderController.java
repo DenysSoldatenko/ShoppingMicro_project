@@ -1,9 +1,12 @@
 package org.example.orderservice.controllers;
 
+import static org.springframework.http.HttpStatus.CREATED;
+
 import lombok.RequiredArgsConstructor;
 import org.example.orderservice.dtos.AdminOrderDto;
 import org.example.orderservice.dtos.OrderDto;
 import org.example.orderservice.dtos.RequestDto;
+import org.example.orderservice.initializers.OrderDataInitializer;
 import org.example.orderservice.services.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +23,16 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/orders/")
+@RequestMapping("/api/v1/orders")
 public class OrderController {
 
   private final OrderService orderService;
+  private final OrderDataInitializer orderDataInitializer;
+
+  @PostMapping("/initialize")
+  public ResponseEntity<String> initializeData() {
+    return new ResponseEntity<>(orderDataInitializer.initData(), CREATED);
+  }
 
   @PostMapping
   @PreAuthorize("hasAuthority('Customer')")
@@ -32,10 +41,9 @@ public class OrderController {
     return new ResponseEntity<>(order, HttpStatus.CREATED);
   }
 
-  @GetMapping("{id}")
-  @PreAuthorize("hasAuthority('Admin') || hasAuthority('Customer')")
-  public ResponseEntity<AdminOrderDto> getOrderById(@PathVariable("id") long orderId) {
-    AdminOrderDto order = orderService.getOrderById(orderId);
-    return new ResponseEntity<>(order, HttpStatus.OK);
+  @GetMapping("/{id}")
+  @PreAuthorize("hasAuthority('Admin')")
+  public AdminOrderDto getOrderById(@PathVariable("id") long orderId) {
+    return orderService.getOrderById(orderId);
   }
 }

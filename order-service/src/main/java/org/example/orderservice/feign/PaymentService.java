@@ -17,16 +17,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 /**
  * Feign client interface for communicating with the Payment Service.
  */
-@FeignClient(name = "payment-service/api/v1/payments/")
+@FeignClient(name = "payment-service/api/v1/payments")
 @CircuitBreaker(name = "payment-service", fallbackMethod = "fallbackMethod")
 public interface PaymentService {
 
   Logger logger = LoggerFactory.getLogger(PaymentService.class);
 
-  @PostMapping("processPayment")
+  @PostMapping("/processPayment")
   ResponseEntity<PaymentDto> processPayment(@RequestBody PaymentDto paymentRequest);
 
-  @GetMapping("{orderId}")
+  @GetMapping("/{orderId}")
   ResponseEntity<PaymentDto> getPaymentDetailsByOrderId(@PathVariable long orderId);
 
   default ResponseEntity<PaymentDto> fallbackMethod(Exception e) {

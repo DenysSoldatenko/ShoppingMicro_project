@@ -9,7 +9,7 @@ management:
 
 spring:
   application:
-    name: product-service
+    name: payment-service
   datasource:
     url: jdbc:postgresql://${SPRING_DATASOURCE_HOST:localhost}:5432/${SPRING_DATASOURCE_DATABASE:example_database}?currentSchema=${SPRING_DATASOURCE_SCHEMA:micro_project}
     username: ${SPRING_DATASOURCE_USERNAME:postgres}
