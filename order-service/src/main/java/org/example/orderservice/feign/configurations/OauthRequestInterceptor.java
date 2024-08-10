@@ -1,4 +1,4 @@
-package org.example.orderservice.configurations;
+package org.example.orderservice.feign.configurations;
 
 import static java.util.Objects.requireNonNull;
 import static org.springframework.security.oauth2.client.OAuth2AuthorizeRequest.withClientRegistrationId;

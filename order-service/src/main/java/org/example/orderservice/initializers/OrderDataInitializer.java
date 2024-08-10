@@ -70,10 +70,10 @@ public class OrderDataInitializer {
   private List<RequestDto> generateOrderBatch(int batchSize) {
     return IntStream.range(0, batchSize)
       .mapToObj(i -> new RequestDto(
-        faker.number().numberBetween(1, 100), // productId
-        faker.number().numberBetween(10, 100), // amount
-        faker.number().numberBetween(1, 10), // quantity
-        faker.options().option(PaymentMethod.class) // paymentMethod
+        faker.number().numberBetween(1, 100),
+        faker.number().numberBetween(10, 100),
+        faker.number().numberBetween(1, 10),
+        faker.options().option(PaymentMethod.class)
       ))
       .toList();
   }

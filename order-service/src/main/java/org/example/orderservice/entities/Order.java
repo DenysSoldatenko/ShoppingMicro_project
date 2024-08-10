@@ -42,6 +42,15 @@ public class Order {
 
   private long amount;
 
+  /**
+   * Constructs an Order with the specified product ID, quantity, order date, status, and amount.
+   *
+   * @param productId   the ID of the product associated with the order
+   * @param quantity    the quantity of the product ordered
+   * @param orderDate   the date and time when the order was placed
+   * @param orderStatus the status of the order (e.g., PENDING, COMPLETED, etc.)
+   * @param amount      the total amount for the order
+   */
   public Order(long productId, long quantity, Instant orderDate, OrderStatus orderStatus, long amount) {
     this.productId = productId;
     this.quantity = quantity;

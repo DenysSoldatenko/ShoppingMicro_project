@@ -30,9 +30,7 @@ public class ProductServiceImpl implements PaymentService {
     PaymentTransaction paymentTransaction = createPaymentTransaction(paymentDto);
     paymentRepository.save(paymentTransaction);
 
-    log.info("Payment details recorded successfully. Transaction Id: {}",
-        paymentTransaction.getId());
-
+    log.info("Payment details recorded successfully. Transaction Id: {}", paymentTransaction.getId());
     return paymentMapper.toDto(paymentTransaction);
   }
 
@@ -43,9 +41,7 @@ public class ProductServiceImpl implements PaymentService {
     PaymentTransaction paymentTransaction = paymentRepository.findByOrderId(orderId)
         .orElseThrow(() -> new PaymentServiceException(PAYMENT_DETAILS_NOT_FOUND + orderId));
 
-    log.info("Payment details retrieved successfully for Order Id: {}. Transaction Id: {}",
-        orderId, paymentTransaction.getId());
-
+    log.info("Payment details retrieved successfully for Order Id: {}. Transaction Id: {}", orderId, paymentTransaction.getId());
     return paymentMapper.toDto(paymentTransaction);
   }
 }

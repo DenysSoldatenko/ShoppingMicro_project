@@ -34,11 +34,6 @@ dependencies {
     implementation "io.zipkin.reporter2:zipkin-reporter-brave:${zipkinVersion}"
     implementation "com.okta.spring:okta-spring-boot-starter:${oktaVersion}"
 
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${springDocWebVersion}"){
-        exclude group: "io.swagger.core.v3", module:"swagger-annotations"
-    }
-    implementation "io.swagger.core.v3:swagger-annotations:${swaggerAnnotationsVersion}"
-
     implementation "org.mapstruct:mapstruct:${mapstructVersion}"
     runtimeOnly "org.postgresql:postgresql:${postgresqlVersion}"
     compileOnly "org.projectlombok:lombok:${lombokVersion}"

@@ -1,4 +1,4 @@
-package org.example.orderservice.feign;
+package org.example.orderservice.feign.configurations;
 
 import feign.codec.ErrorDecoder;
 import org.springframework.context.annotation.Bean;

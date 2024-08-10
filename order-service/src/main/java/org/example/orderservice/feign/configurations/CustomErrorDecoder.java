@@ -1,4 +1,4 @@
-package org.example.orderservice.feign;
+package org.example.orderservice.feign.configurations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Response;
