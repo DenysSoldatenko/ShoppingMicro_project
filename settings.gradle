@@ -1,6 +1,5 @@
 rootProject.name = 'ShoppingMicro_project'
 
-includeBuild('config-server')
 includeBuild('eureka-server')
 includeBuild('gateway-service')
 includeBuild('payment-service')
