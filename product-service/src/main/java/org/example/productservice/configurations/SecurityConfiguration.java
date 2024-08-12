@@ -16,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
 
   private static final String[] PUBLIC_ROUTES = {
+    "/api/v*/products/initialize",
     "/v3/api-docs/**",
     "/swagger-ui/**",
     "/swagger-resources/**",

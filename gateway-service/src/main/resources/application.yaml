@@ -50,6 +50,7 @@ spring:
               args:
                 redis-rate-limiter.replenishRate: 1
                 redis-rate-limiter.burstCapacity: 1
+
 okta:
   oauth2:
     issuer: ${0KTA_ISSUER}
@@ -57,6 +58,13 @@ okta:
     client-id: ${0KTA_CLIENT_ID}
     client-secret: ${0KTA_CLIENT_SECRET}
     scopes: openid, email, profile, offline_access
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${EUREKA_SERVER_HOST:localhost}:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
 
 logging:
   level:
